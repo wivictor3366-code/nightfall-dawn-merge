@@ -1,0 +1,379 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: #07040f;
+  color: #e7e5e4;
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  user-select: none;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+.font-display {
+  font-family: "Cinzel", Georgia, "Times New Roman", serif;
+}
+
+/* ---------- atmosphere ---------- */
+.night-bg {
+  background: radial-gradient(ellipse 90% 60% at 50% -10%, #3b1450 0%, #170a2b 45%, #07040f 100%);
+}
+
+.fog {
+  position: absolute;
+  left: -25%;
+  right: -25%;
+  height: 45%;
+  background: radial-gradient(ellipse at center, rgba(190, 60, 100, 0.2), transparent 70%);
+  animation: drift 16s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes drift {
+  from {
+    transform: translateX(-5%);
+  }
+  to {
+    transform: translateX(5%);
+  }
+}
+
+.gold-text {
+  background: linear-gradient(180deg, #fffbeb 0%, #fcd34d 50%, #b45309 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.35));
+}
+
+.panel {
+  background: linear-gradient(180deg, rgba(38, 20, 58, 0.94), rgba(14, 7, 26, 0.96));
+  border: 1px solid rgba(251, 191, 36, 0.28);
+  box-shadow:
+    0 16px 40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ---------- buttons ---------- */
+.btn-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.25rem;
+  border-radius: 1rem;
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: #2a1400;
+  background: linear-gradient(180deg, #fef3c7, #f59e0b 55%, #b45309);
+  box-shadow:
+    0 6px 0 #78350f,
+    0 10px 24px rgba(245, 158, 11, 0.35);
+  transition:
+    transform 0.08s,
+    box-shadow 0.08s;
+}
+
+.btn-gold:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 #78350f;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.25rem;
+  border-radius: 1rem;
+  font-family: "Cinzel", Georgia, serif;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #fde68a;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  transition: background 0.15s;
+}
+
+.btn-ghost:hover {
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.btn-sm {
+  padding: 0.5rem 0.85rem !important;
+  font-size: 0.8rem;
+  border-radius: 0.75rem;
+}
+
+.upgrade-card {
+  background: linear-gradient(180deg, rgba(251, 191, 36, 0.08), rgba(0, 0, 0, 0.2));
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  transition:
+    transform 0.12s,
+    border-color 0.12s;
+}
+
+.upgrade-card:hover,
+.upgrade-card:active {
+  transform: translateX(4px);
+  border-color: rgba(251, 191, 36, 0.7);
+}
+
+/* ---------- board ---------- */
+.board {
+  position: relative;
+  border-radius: 1.25rem;
+  background: radial-gradient(circle at 50% 35%, #2d1446, #13071f 72%);
+  border: 2px solid rgba(251, 191, 36, 0.35);
+  box-shadow:
+    0 0 46px rgba(251, 146, 60, 0.16),
+    inset 0 0 40px rgba(0, 0, 0, 0.65);
+  overflow: hidden;
+}
+
+.slot,
+.tile-pos,
+.fx-cell {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 25%;
+  height: 25%;
+}
+
+.slot {
+  padding: 4%;
+}
+
+.slot > div {
+  width: 100%;
+  height: 100%;
+  border-radius: 16%;
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.tile-pos {
+  padding: 4%;
+  transition: transform 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  will-change: transform;
+}
+
+.tile-body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.sun-core {
+  border-radius: 9999px;
+}
+
+.sun-core .rays {
+  position: absolute;
+  left: 6%;
+  top: 6%;
+  width: 88%;
+  height: 88%;
+  animation: spin 16s linear infinite;
+}
+
+.shade-body {
+  border-radius: 22%;
+  overflow: hidden;
+}
+
+.glow-boss {
+  animation: boss-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes boss-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 14px rgba(244, 63, 94, 0.45);
+  }
+  50% {
+    box-shadow: 0 0 28px rgba(244, 63, 94, 0.9);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ---------- tile animations (replayed by keyed remounts each turn) ---------- */
+@keyframes pop-in {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes hit {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.14);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.anim-spawn {
+  animation: pop-in 220ms ease-out;
+}
+
+.anim-hit {
+  animation: hit 240ms ease-out;
+}
+
+.anim-pop {
+  animation: pop-in 260ms ease-out;
+}
+
+/* ---------- effects layer ---------- */
+.fx-ring {
+  position: absolute;
+  inset: 4%;
+  border-radius: 9999px;
+  border: 3px solid #fde68a;
+  animation: ring 420ms ease-out forwards;
+}
+
+@keyframes ring {
+  from {
+    transform: scale(0.5);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.35);
+    opacity: 0;
+  }
+}
+
+.fx-pop {
+  position: absolute;
+  left: 22%;
+  top: 22%;
+  width: 56%;
+  height: 56%;
+  animation: pop-fade 380ms ease-out forwards;
+}
+
+@keyframes pop-fade {
+  from {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1.4);
+    opacity: 0;
+  }
+}
+
+.fx-strike {
+  position: absolute;
+  inset: 4%;
+  border-radius: 16%;
+  box-shadow:
+    inset 0 0 0 3px #fde68a,
+    0 0 24px #fbbf24;
+  animation: fade-out 380ms ease-out forwards;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.spark {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  margin: -4px;
+  border-radius: 9999px;
+  background: #fde68a;
+  box-shadow: 0 0 8px #fbbf24;
+  animation: spark 460ms ease-out forwards;
+}
+
+@keyframes spark {
+  from {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translate(var(--dx), var(--dy)) scale(0.2);
+    opacity: 0;
+  }
+}
+
+.flash {
+  animation: flash 300ms ease-out;
+}
+
+@keyframes flash {
+  from {
+    box-shadow: inset 0 0 0 4px rgba(244, 63, 94, 0.9);
+    opacity: 1;
+  }
+  to {
+    box-shadow: inset 0 0 0 4px rgba(244, 63, 94, 0);
+    opacity: 0;
+  }
+}
+
+/* ---------- bars ---------- */
+.bar {
+  height: 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.bar > div {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 300ms ease;
+  background: linear-gradient(90deg, #fde68a, #f59e0b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
